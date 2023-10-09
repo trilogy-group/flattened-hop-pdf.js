@@ -20,9 +20,7 @@ import {
   MAX_SCALE,
   MIN_SCALE,
   noContextMenuHandler,
-  toggleCheckedBtn,
 } from "./ui_utils.js";
-import { AnnotationEditorType } from "pdfjs-lib";
 
 const PAGE_NUMBER_LOADING_INDICATOR = "visiblePageIsLoading";
 
@@ -41,9 +39,7 @@ const PAGE_NUMBER_LOADING_INDICATOR = "visiblePageIsLoading";
  * @property {HTMLButtonElement} zoomIn - Button to zoom in the pages.
  * @property {HTMLButtonElement} zoomOut - Button to zoom out the pages.
  * @property {HTMLButtonElement} viewFind - Button to open find bar.
- * @property {HTMLButtonElement} openFile - Button to open a new document.
- * @property {HTMLButtonElement} editorFreeTextButton - Button to switch to
- *   FreeText editing.
+
  * @property {HTMLButtonElement} download - Button to download the document.
  */
 
@@ -66,46 +62,8 @@ class Toolbar {
       { element: options.zoomOut, eventName: "zoomout" },
       { element: options.print, eventName: "print" },
       { element: options.download, eventName: "download" },
-      {
-        element: options.editorFreeTextButton,
-        eventName: "switchannotationeditormode",
-        eventDetails: {
-          get mode() {
-            const { classList } = options.editorFreeTextButton;
-            return classList.contains("toggled")
-              ? AnnotationEditorType.NONE
-              : AnnotationEditorType.FREETEXT;
-          },
-        },
-      },
-      {
-        element: options.editorInkButton,
-        eventName: "switchannotationeditormode",
-        eventDetails: {
-          get mode() {
-            const { classList } = options.editorInkButton;
-            return classList.contains("toggled")
-              ? AnnotationEditorType.NONE
-              : AnnotationEditorType.INK;
-          },
-        },
-      },
-      {
-        element: options.editorStampButton,
-        eventName: "switchannotationeditormode",
-        eventDetails: {
-          get mode() {
-            const { classList } = options.editorStampButton;
-            return classList.contains("toggled")
-              ? AnnotationEditorType.NONE
-              : AnnotationEditorType.STAMP;
-          },
-        },
-      },
     ];
-    if (typeof PDFJSDev === "undefined" || PDFJSDev.test("GENERIC")) {
-      this.buttons.push({ element: options.openFile, eventName: "openfile" });
-    }
+
     this.items = {
       numPages: options.numPages,
       pageNumber: options.pageNumber,
@@ -207,47 +165,6 @@ class Toolbar {
       this.#wasLocalized = true;
       this.#adjustScaleWidth();
       this.#updateUIState(true);
-    });
-
-    this.#bindEditorToolsListener(options);
-  }
-
-  #bindEditorToolsListener({
-    editorFreeTextButton,
-    editorFreeTextParamsToolbar,
-    editorInkButton,
-    editorInkParamsToolbar,
-    editorStampButton,
-    editorStampParamsToolbar,
-  }) {
-    const editorModeChanged = ({ mode }) => {
-      toggleCheckedBtn(
-        editorFreeTextButton,
-        mode === AnnotationEditorType.FREETEXT,
-        editorFreeTextParamsToolbar
-      );
-      toggleCheckedBtn(
-        editorInkButton,
-        mode === AnnotationEditorType.INK,
-        editorInkParamsToolbar
-      );
-      toggleCheckedBtn(
-        editorStampButton,
-        mode === AnnotationEditorType.STAMP,
-        editorStampParamsToolbar
-      );
-
-      const isDisable = mode === AnnotationEditorType.DISABLE;
-      editorFreeTextButton.disabled = isDisable;
-      editorInkButton.disabled = isDisable;
-      editorStampButton.disabled = isDisable;
-    };
-    this.eventBus._on("annotationeditormodechanged", editorModeChanged);
-
-    this.eventBus._on("toolbarreset", evt => {
-      if (evt.source === this) {
-        editorModeChanged({ mode: AnnotationEditorType.DISABLE });
-      }
     });
   }
 

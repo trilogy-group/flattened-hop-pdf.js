@@ -52,21 +52,7 @@ function getViewerConfiguration() {
       zoomIn: document.getElementById("zoomIn"),
       zoomOut: document.getElementById("zoomOut"),
       viewFind: document.getElementById("viewFind"),
-      openFile:
-        typeof PDFJSDev === "undefined" || PDFJSDev.test("GENERIC")
-          ? document.getElementById("openFile")
-          : null,
       print: document.getElementById("print"),
-      editorFreeTextButton: document.getElementById("editorFreeText"),
-      editorFreeTextParamsToolbar: document.getElementById(
-        "editorFreeTextParamsToolbar"
-      ),
-      editorInkButton: document.getElementById("editorInk"),
-      editorInkParamsToolbar: document.getElementById("editorInkParamsToolbar"),
-      editorStampButton: document.getElementById("editorStamp"),
-      editorStampParamsToolbar: document.getElementById(
-        "editorStampParamsToolbar"
-      ),
       download: document.getElementById("download"),
     },
     secondaryToolbar: {
@@ -156,14 +142,6 @@ function getViewerConfiguration() {
         pageSize: document.getElementById("pageSizeField"),
         linearized: document.getElementById("linearizedField"),
       },
-    },
-    annotationEditorParams: {
-      editorFreeTextFontSize: document.getElementById("editorFreeTextFontSize"),
-      editorFreeTextColor: document.getElementById("editorFreeTextColor"),
-      editorInkColor: document.getElementById("editorInkColor"),
-      editorInkThickness: document.getElementById("editorInkThickness"),
-      editorInkOpacity: document.getElementById("editorInkOpacity"),
-      editorStampAddImage: document.getElementById("editorStampAddImage"),
     },
     printContainer: document.getElementById("printContainer"),
     openFileInput:

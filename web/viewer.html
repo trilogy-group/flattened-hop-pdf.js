@@ -67,7 +67,6 @@ See https://github.com/adobe-type-tools/cmap-resources
           "display-node_utils": "../src/display/stubs.js",
           "display-svg": "../src/display/stubs.js",
 
-          "web-annotation_editor_params": "./annotation_editor_params.js",
           "web-com": "./genericcom.js",
           "web-pdf_attachment_viewer": "./pdf_attachment_viewer.js",
           "web-pdf_cursor_tools": "./pdf_cursor_tools.js",
@@ -168,51 +167,8 @@ See https://github.com/adobe-type-tools/cmap-resources
           </div>
         </div>  <!-- findbar -->
 
-        <div class="editorParamsToolbar hidden doorHangerRight" id="editorFreeTextParamsToolbar">
-          <div class="editorParamsToolbarContainer">
-            <div class="editorParamsSetter">
-              <label for="editorFreeTextColor" class="editorParamsLabel" data-l10n-id="editor_free_text_color">Color</label>
-              <input type="color" id="editorFreeTextColor" class="editorParamsColor" tabindex="100">
-            </div>
-            <div class="editorParamsSetter">
-              <label for="editorFreeTextFontSize" class="editorParamsLabel" data-l10n-id="editor_free_text_size">Size</label>
-              <input type="range" id="editorFreeTextFontSize" class="editorParamsSlider" value="10" min="5" max="100" step="1" tabindex="101">
-            </div>
-          </div>
-        </div>
-
-        <div class="editorParamsToolbar hidden doorHangerRight" id="editorInkParamsToolbar">
-          <div class="editorParamsToolbarContainer">
-            <div class="editorParamsSetter">
-              <label for="editorInkColor" class="editorParamsLabel" data-l10n-id="editor_ink_color">Color</label>
-              <input type="color" id="editorInkColor" class="editorParamsColor" tabindex="102">
-            </div>
-            <div class="editorParamsSetter">
-              <label for="editorInkThickness" class="editorParamsLabel" data-l10n-id="editor_ink_thickness">Thickness</label>
-              <input type="range" id="editorInkThickness" class="editorParamsSlider" value="1" min="1" max="20" step="1" tabindex="103">
-            </div>
-            <div class="editorParamsSetter">
-              <label for="editorInkOpacity" class="editorParamsLabel" data-l10n-id="editor_ink_opacity">Opacity</label>
-              <input type="range" id="editorInkOpacity" class="editorParamsSlider" value="100" min="1" max="100" step="1" tabindex="104">
-            </div>
-          </div>
-        </div>
-
-        <div class="editorParamsToolbar hidden doorHangerRight" id="editorStampParamsToolbar">
-          <div class="editorParamsToolbarContainer">
-            <button id="editorStampAddImage" class="secondaryToolbarButton" title="Add image" tabindex="105" data-l10n-id="editor_stamp_add_image">
-              <span data-l10n-id="editor_stamp_add_image_label">Add image</span>
-            </button>
-          </div>
-        </div>
-
         <div id="secondaryToolbar" class="secondaryToolbar hidden doorHangerRight">
           <div id="secondaryToolbarButtonContainer">
-<!--#if GENERIC-->
-            <button id="secondaryOpenFile" class="secondaryToolbarButton visibleLargeView" title="Open File" tabindex="51" data-l10n-id="open_file">
-              <span data-l10n-id="open_file_label">Open</span>
-            </button>
-<!--#endif-->
 
             <button id="secondaryPrint" class="secondaryToolbarButton visibleMediumView" title="Print" tabindex="52" data-l10n-id="print">
               <span data-l10n-id="print_label">Print</span>
@@ -328,11 +284,6 @@ See https://github.com/adobe-type-tools/cmap-resources
                 <span id="numPages" class="toolbarLabel"></span>
               </div>
               <div id="toolbarViewerRight">
-<!--#if GENERIC-->
-                <button id="openFile" class="toolbarButton hiddenLargeView" title="Open File" tabindex="31" data-l10n-id="open_file">
-                  <span data-l10n-id="open_file_label">Open</span>
-                </button>
-<!--#endif-->
 
                 <button id="print" class="toolbarButton hiddenMediumView" title="Print" tabindex="32" data-l10n-id="print">
                   <span data-l10n-id="print_label">Print</span>
@@ -343,20 +294,6 @@ See https://github.com/adobe-type-tools/cmap-resources
                 </button>
 
                 <div class="verticalToolbarSeparator hiddenMediumView"></div>
-
-                <div id="editorModeButtons" class="splitToolbarButton toggled" role="radiogroup">
-                  <button id="editorFreeText" class="toolbarButton" disabled="disabled" title="Text" role="radio" aria-checked="false" aria-controls="editorFreeTextParamsToolbar" tabindex="34" data-l10n-id="editor_free_text2">
-                    <span data-l10n-id="editor_free_text2_label">Text</span>
-                  </button>
-                  <button id="editorInk" class="toolbarButton" disabled="disabled" title="Draw" role="radio" aria-checked="false" aria-controls="editorInkParamsToolbar" tabindex="35" data-l10n-id="editor_ink2">
-                    <span data-l10n-id="editor_ink2_label">Draw</span>
-                  </button>
-                  <button id="editorStamp" class="toolbarButton hidden" disabled="disabled" title="Add or edit images" role="radio" aria-checked="false" aria-controls="editorStampParamsToolbar" tabindex="36" data-l10n-id="editor_stamp1">
-                    <span data-l10n-id="editor_stamp1_label">Add or edit images</span>
-                  </button>
-                </div>
-
-                <div id="editorModeSeparator" class="verticalToolbarSeparator"></div>
 
                 <button id="secondaryToolbarToggle" class="toolbarButton" title="Tools" tabindex="48" data-l10n-id="tools" aria-expanded="false" aria-controls="secondaryToolbar">
                   <span data-l10n-id="tools_label">Tools</span>
