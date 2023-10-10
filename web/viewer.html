@@ -29,6 +29,18 @@ See https://github.com/adobe-type-tools/cmap-resources
 <!--#endif-->
     <title>PDF.js viewer</title>
 
+    <!-- This will make the translations to fallback to default english -->
+    <script type="application/l10n">
+      {
+        "default_locale": "en-US",
+        "locales": {
+          "en-us": {
+          }
+        }
+      }
+    </script>
+
+
 <!--#if MOZCENTRAL-->
 <!--#include viewer-snippet-firefox-extension.html-->
 <!--#elif CHROME-->
@@ -49,9 +61,8 @@ See https://github.com/adobe-type-tools/cmap-resources
 <!--<script src="resource://pdf.js/web/viewer.js"></script>-->
 <!--#elif !MINIFIED-->
 <!--<script src="viewer.js"></script>-->
+<!--<script src="../build/pdf.worker.js"></script>-->
 <!--#elif /* Development mode. */-->
-    <link rel="resource" type="application/l10n" href="locale/locale.properties">
-
     <script defer src="../node_modules/es-module-shims/dist/es-module-shims.js"></script>
     <script type="importmap-shim">
       {
@@ -136,7 +147,7 @@ See https://github.com/adobe-type-tools/cmap-resources
       <div id="mainContainer">
         <div class="findbar hidden doorHanger" id="findbar">
           <div id="findbarInputContainer">
-            <input id="findInput" class="toolbarField" title="Find" placeholder="Find in document…" tabindex="91" data-l10n-id="find_input" aria-invalid="false">
+            <input id="findInput" class="toolbarField" title="Find" placeholder="Find in document..." tabindex="91" data-l10n-id="find_input" aria-invalid="false">
             <div class="splitToolbarButton">
               <button id="findPrevious" class="toolbarButton" title="Find the previous occurrence of the phrase" tabindex="92" data-l10n-id="find_previous">
                 <span data-l10n-id="find_previous_label">Previous</span>

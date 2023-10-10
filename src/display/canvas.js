@@ -2880,7 +2880,7 @@ class CanvasGraphics {
     }
     const imgData = this.getObject(objId);
     if (!imgData) {
-      warn("Dependent image isn't ready yet");
+      //warn("Dependent image isn't ready yet");
       return;
     }
 
@@ -2893,7 +2893,7 @@ class CanvasGraphics {
     }
     const imgData = this.getObject(objId);
     if (!imgData) {
-      warn("Dependent image isn't ready yet");
+      //warn("Dependent image isn't ready yet");
       return;
     }
 

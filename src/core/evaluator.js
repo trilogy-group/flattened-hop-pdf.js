@@ -802,7 +802,7 @@ class PartialEvaluator {
         return this._sendImgData(objId, imgData, cacheGlobally);
       })
       .catch(reason => {
-        warn(`Unable to decode image "${objId}": "${reason}".`);
+        //warn(`Unable to decode image "${objId}": "${reason}".`);
 
         return this._sendImgData(objId, /* imgData = */ null, cacheGlobally);
       });

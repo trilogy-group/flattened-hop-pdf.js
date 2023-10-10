@@ -39,6 +39,8 @@ import Vinyl from "vinyl";
 import webpack2 from "webpack";
 import webpackStream from "webpack-stream";
 import zip from "gulp-zip";
+import cheerio from "cheerio";
+
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -76,8 +78,7 @@ const DIST_REPO_URL = "https://github.com/mozilla/pdfjs-dist";
 const CONFIG_FILE = "pdfjs.config";
 const config = JSON.parse(fs.readFileSync(CONFIG_FILE).toString());
 
-const ENV_TARGETS = [
-  "last 2 versions",
+const ENV_TARGETS = [  "last 2 versions",
   "Chrome >= 92",
   "Firefox ESR",
   "Safari >= 15.4",
@@ -1046,6 +1047,49 @@ gulp.task(
       });
 
       return buildGeneric(defines, GENERIC_LEGACY_DIR);
+    },
+    function bundleIntoSingleHtml() {
+      const htmlPath = path.join(GENERIC_LEGACY_DIR, 'web/viewer.html');
+      const html = fs.readFileSync(htmlPath, 'utf8');
+      const $ = cheerio.load(html);
+
+      $('link[rel="stylesheet"]').each(function() {
+        const cssPath = path.join(GENERIC_LEGACY_DIR + 'web', $(this).attr('href'));
+        let css = fs.readFileSync(cssPath, 'utf8');
+
+        // Replace SVG references with Data URLs
+        css = css.replace(/url\((.*)\)/g, function(match, svgPath) {
+          svgPath = svgPath.trim('"')
+          // Only proceed if svgPath is a file path, not a Data URL
+          if (svgPath.endsWith('.svg')) {
+            const absoluteSvgPath = path.join(GENERIC_LEGACY_DIR + 'web', svgPath);
+            const svg = fs.readFileSync(absoluteSvgPath, 'utf8');
+            const dataUrl = 'data:image/svg+xml,' + encodeURIComponent(svg);
+            return `url(${dataUrl})`;
+          }
+
+          if (svgPath.endsWith('.gif')) {
+            const absoluteSvgPath = path.join(GENERIC_LEGACY_DIR + 'web', svgPath);
+            const svg = fs.readFileSync(absoluteSvgPath, 'utf8');
+            const dataUrl = 'data:image/gif,' + encodeURIComponent(svg);
+            return `url(${dataUrl})`;
+          }
+
+          // If svgPath is a Data URL, return it as is
+          return match;
+        });
+
+        $(this).replaceWith(`<style>${css}</style>`);
+      });
+
+      $('script[src]').each(function() {
+        const jsPath = path.join(GENERIC_LEGACY_DIR + "web", $(this).attr('src'));
+        console.log(jsPath)
+        const js = fs.readFileSync(jsPath, 'utf8');
+        $(this).replaceWith(`<script>${js}</script>`);
+      });
+
+      fs.writeFileSync(htmlPath, $.html());
     }
   )
 );
@@ -1053,14 +1097,10 @@ gulp.task(
 function buildComponents(defines, dir) {
   rimraf.sync(dir);
 
-  const COMPONENTS_IMAGES = [
-    "web/images/annotation-*.svg",
-    "web/images/loading-icon.gif",
-  ];
+
 
   return merge([
     createComponentsBundle(defines).pipe(gulp.dest(dir)),
-    gulp.src(COMPONENTS_IMAGES).pipe(gulp.dest(dir + "images")),
     preprocessCSS("web/pdf_viewer.css", defines)
       .pipe(
         postcss([
@@ -1306,6 +1346,49 @@ gulp.task(
     async function compressMinifiedLegacy(done) {
       await parseMinified(MINIFIED_LEGACY_DIR);
       done();
+    },
+    async function bundleIntoSingleHtml() {
+      const htmlPath = path.join(MINIFIED_LEGACY_DIR, 'web/viewer.html');
+      const html = fs.readFileSync(htmlPath, 'utf8');
+      const $ = cheerio.load(html);
+
+      $('link[rel="stylesheet"]').each(function() {
+        const cssPath = path.join(MINIFIED_LEGACY_DIR + 'web', $(this).attr('href'));
+        let css = fs.readFileSync(cssPath, 'utf8');
+
+        // Replace SVG references with Data URLs
+        css = css.replace(/url\((.*)\)/g, function(match, svgPath) {
+          svgPath = svgPath.trim('"')
+          // Only proceed if svgPath is a file path, not a Data URL
+          if (svgPath.endsWith('.svg')) {
+            const absoluteSvgPath = path.join(MINIFIED_LEGACY_DIR + 'web', svgPath);
+            const svg = fs.readFileSync(absoluteSvgPath, 'utf8');
+            const dataUrl = 'data:image/svg+xml,' + encodeURIComponent(svg);
+            return `url(${dataUrl})`;
+          }
+
+          if (svgPath.endsWith('.gif')) {
+            const absoluteSvgPath = path.join(MINIFIED_LEGACY_DIR + 'web', svgPath);
+            const svg = fs.readFileSync(absoluteSvgPath, 'utf8');
+            const dataUrl = 'data:image/gif,' + encodeURIComponent(svg);
+            return `url(${dataUrl})`;
+          }
+
+          // If svgPath is a Data URL, return it as is
+          return match;
+        });
+
+        $(this).replaceWith(`<style>${css}</style>`);
+      });
+
+      $('script[src]').each(function() {
+        const jsPath = path.join(MINIFIED_LEGACY_DIR + "web", $(this).attr('src'));
+        console.log(jsPath)
+        const js = fs.readFileSync(jsPath, 'utf8');
+        $(this).replaceWith(`<script>${js}</script>`);
+      });
+
+      fs.writeFileSync(htmlPath, $.html());
     }
   )
 );
@@ -2478,3 +2561,4 @@ gulp.task(
     "lint-chromium"
   )
 );
+
