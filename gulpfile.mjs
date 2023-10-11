@@ -1064,7 +1064,7 @@ gulp.task(
           if (svgPath.endsWith('.svg')) {
             const absoluteSvgPath = path.join(GENERIC_LEGACY_DIR + 'web', svgPath);
             const svg = fs.readFileSync(absoluteSvgPath, 'utf8');
-            const dataUrl = 'data:image/svg+xml,' + encodeURI(svg);
+            const dataUrl = 'data:image/svg+xml,' + encodeURIComponent(svg).replace(/\(/g, '%28').replace(/\)/g, '%29');
             return `url(${dataUrl})`;
           }
 
