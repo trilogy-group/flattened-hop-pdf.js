@@ -1064,14 +1064,7 @@ gulp.task(
           if (svgPath.endsWith('.svg')) {
             const absoluteSvgPath = path.join(GENERIC_LEGACY_DIR + 'web', svgPath);
             const svg = fs.readFileSync(absoluteSvgPath, 'utf8');
-            const dataUrl = 'data:image/svg+xml,' + encodeURIComponent(svg);
-            return `url(${dataUrl})`;
-          }
-
-          if (svgPath.endsWith('.gif')) {
-            const absoluteSvgPath = path.join(GENERIC_LEGACY_DIR + 'web', svgPath);
-            const svg = fs.readFileSync(absoluteSvgPath, 'utf8');
-            const dataUrl = 'data:image/gif,' + encodeURIComponent(svg);
+            const dataUrl = 'data:image/svg+xml,' + encodeURI(svg);
             return `url(${dataUrl})`;
           }
 
@@ -1363,14 +1356,7 @@ gulp.task(
           if (svgPath.endsWith('.svg')) {
             const absoluteSvgPath = path.join(MINIFIED_LEGACY_DIR + 'web', svgPath);
             const svg = fs.readFileSync(absoluteSvgPath, 'utf8');
-            const dataUrl = 'data:image/svg+xml,' + encodeURIComponent(svg);
-            return `url(${dataUrl})`;
-          }
-
-          if (svgPath.endsWith('.gif')) {
-            const absoluteSvgPath = path.join(MINIFIED_LEGACY_DIR + 'web', svgPath);
-            const svg = fs.readFileSync(absoluteSvgPath, 'utf8');
-            const dataUrl = 'data:image/gif,' + encodeURIComponent(svg);
+            const dataUrl = 'data:image/svg+xml,' + encodeURIComponent(svg).replace(/\(/g, '%28').replace(/\)/g, '%29');
             return `url(${dataUrl})`;
           }
 

@@ -10,12 +10,7 @@
   // fetch an l10n objects
   function getL10nData(key) {
     gL10nData ||= gExternalLocalizerServices.getStrings();
-
-    const data = gL10nData?.[key];
-    if (!data) {
-      console.warn("[l10n] #" + key + " missing for [" + gLanguage + "]");
-    }
-    return data;
+    return gL10nData?.[key];
   }
 
   // replace {{arguments}} with their values

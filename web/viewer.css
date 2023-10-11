@@ -39,10 +39,9 @@
   --toolbar-icon-bg-color: rgba(0, 0, 0, 1);
   --toolbar-icon-hover-bg-color: rgba(0, 0, 0, 1);
 
-  --sidebar-narrow-bg-color: rgba(212, 212, 215, 0.9);
-  --sidebar-toolbar-bg-color: rgba(245, 246, 247, 1);
-  --toolbar-bg-color: rgba(249, 249, 250, 1);
-  --toolbar-border-color: rgba(184, 184, 184, 1);
+  --sidebar-narrow-bg-color: rgba(142, 160, 172, 0.9);
+  --sidebar-toolbar-bg-color: rgba(150, 166, 180, 1);
+  --toolbar-bg-color: rgba(158, 172, 186);
   --toolbar-box-shadow: 0 1px 0 var(--toolbar-border-color);
   --toolbar-border-bottom: none;
   --toolbarSidebar-box-shadow: inset calc(-1px * var(--dir-factor)) 0 0
@@ -84,6 +83,7 @@
   --toolbarButton-editorStamp-icon: url(images/toolbarButton-editorStamp.svg);
   --toolbarButton-menuArrow-icon: url(images/toolbarButton-menuArrow.svg);
   --toolbarButton-sidebarToggle-icon: url(images/toolbarButton-sidebarToggle.svg);
+  --toolbarButton-darkModeToggle-icon: url(images/toolbarButton-darkMode.svg);
   --toolbarButton-secondaryToolbarToggle-icon: url(images/toolbarButton-secondaryToolbarToggle.svg);
   --toolbarButton-pageUp-icon: url(images/toolbarButton-pageUp.svg);
   --toolbarButton-pageDown-icon: url(images/toolbarButton-pageDown.svg);
@@ -126,51 +126,49 @@
   /*#endif*/
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --main-color: rgba(249, 249, 250, 1);
-    --body-bg-color: rgba(42, 42, 46, 1);
-    --progressBar-color: rgba(0, 96, 223, 1);
-    --progressBar-bg-color: rgba(40, 40, 43, 1);
-    --progressBar-blend-color: rgba(20, 68, 133, 1);
-    --scrollbar-color: rgba(121, 121, 123, 1);
-    --scrollbar-bg-color: rgba(35, 35, 39, 1);
-    --toolbar-icon-bg-color: rgba(255, 255, 255, 1);
-    --toolbar-icon-hover-bg-color: rgba(255, 255, 255, 1);
+[data-theme="dark"] {
+  --main-color: rgba(249, 249, 250, 1);
+  --body-bg-color: rgba(42, 42, 46, 1);
+  --progressBar-color: rgba(0, 96, 223, 1);
+  --progressBar-bg-color: rgba(40, 40, 43, 1);
+  --progressBar-blend-color: rgba(20, 68, 133, 1);
+  --scrollbar-color: rgba(121, 121, 123, 1);
+  --scrollbar-bg-color: rgba(35, 35, 39, 1);
+  --toolbar-icon-bg-color: rgba(255, 255, 255, 1);
+  --toolbar-icon-hover-bg-color: rgba(255, 255, 255, 1);
 
-    --sidebar-narrow-bg-color: rgba(42, 42, 46, 0.9);
-    --sidebar-toolbar-bg-color: rgba(50, 50, 52, 1);
-    --toolbar-bg-color: rgba(56, 56, 61, 1);
-    --toolbar-border-color: rgba(12, 12, 13, 1);
-    --button-hover-color: rgba(102, 102, 103, 1);
-    --toggled-btn-color: rgba(255, 255, 255, 1);
-    --toggled-btn-bg-color: rgba(0, 0, 0, 0.3);
-    --toggled-hover-active-btn-color: rgba(0, 0, 0, 0.4);
-    --dropdown-btn-bg-color: rgba(74, 74, 79, 1);
-    --separator-color: rgba(0, 0, 0, 0.3);
-    --field-color: rgba(250, 250, 250, 1);
-    --field-bg-color: rgba(64, 64, 68, 1);
-    --field-border-color: rgba(115, 115, 115, 1);
-    --treeitem-color: rgba(255, 255, 255, 0.8);
-    --treeitem-bg-color: rgba(255, 255, 255, 0.15);
-    --treeitem-hover-color: rgba(255, 255, 255, 0.9);
-    --treeitem-selected-color: rgba(255, 255, 255, 0.9);
-    --treeitem-selected-bg-color: rgba(255, 255, 255, 0.25);
-    --thumbnail-hover-color: rgba(255, 255, 255, 0.1);
-    --thumbnail-selected-color: rgba(255, 255, 255, 0.2);
-    --doorhanger-bg-color: rgba(74, 74, 79, 1);
-    --doorhanger-border-color: rgba(39, 39, 43, 1);
-    --doorhanger-hover-color: rgba(249, 249, 250, 1);
-    --doorhanger-hover-bg-color: rgba(93, 94, 98, 1);
-    --doorhanger-separator-color: rgba(92, 92, 97, 1);
-    --dialog-button-bg-color: rgba(92, 92, 97, 1);
-    --dialog-button-hover-bg-color: rgba(115, 115, 115, 1);
+  --sidebar-narrow-bg-color: rgba(56, 56, 56, 0.9);
+  --sidebar-toolbar-bg-color: rgba(62, 62, 62, 1);
+  --toolbar-bg-color: rgba(68, 68, 68, 1);
+  --toolbar-border-color: rgba(12, 12, 13, 1);
+  --button-hover-color: rgba(102, 102, 103, 1);
+  --toggled-btn-color: rgba(255, 255, 255, 1);
+  --toggled-btn-bg-color: rgba(0, 0, 0, 0.3);
+  --toggled-hover-active-btn-color: rgba(0, 0, 0, 0.4);
+  --dropdown-btn-bg-color: rgba(74, 74, 79, 1);
+  --separator-color: rgba(0, 0, 0, 0.3);
+  --field-color: rgba(250, 250, 250, 1);
+  --field-bg-color: rgba(64, 64, 68, 1);
+  --field-border-color: rgba(115, 115, 115, 1);
+  --treeitem-color: rgba(255, 255, 255, 0.8);
+  --treeitem-bg-color: rgba(255, 255, 255, 0.15);
+  --treeitem-hover-color: rgba(255, 255, 255, 0.9);
+  --treeitem-selected-color: rgba(255, 255, 255, 0.9);
+  --treeitem-selected-bg-color: rgba(255, 255, 255, 0.25);
+  --thumbnail-hover-color: rgba(255, 255, 255, 0.1);
+  --thumbnail-selected-color: rgba(255, 255, 255, 0.2);
+  --doorhanger-bg-color: rgba(74, 74, 79, 1);
+  --doorhanger-border-color: rgba(39, 39, 43, 1);
+  --doorhanger-hover-color: rgba(249, 249, 250, 1);
+  --doorhanger-hover-bg-color: rgba(93, 94, 98, 1);
+  --doorhanger-separator-color: rgba(92, 92, 97, 1);
+  --dialog-button-bg-color: rgba(92, 92, 97, 1);
+  --dialog-button-hover-bg-color: rgba(115, 115, 115, 1);
 
-    /* This image is used in <input> elements, which unfortunately means that
+  /* This image is used in <input> elements, which unfortunately means that
      * the `mask-image` approach used with all of the other images doesn't work
      * here; hence why we still have two versions of this particular image. */
-    --loading-icon: url(images/loading-dark.svg);
-  }
+  --loading-icon: url(images/loading-dark.svg);
 }
 
 @media screen and (forced-colors: active) {
@@ -261,7 +259,7 @@ body {
 
 #sidebarContainer {
   position: absolute;
-  inset-block: 32px 0;
+  inset-block: 44px 0;
   inset-inline-start: calc(-1 * var(--sidebar-width));
   width: var(--sidebar-width);
   visibility: hidden;
@@ -353,13 +351,14 @@ body {
 .secondaryToolbar,
 .editorParamsToolbar {
   position: relative;
-  height: 32px;
+  height: 44px;
   background-color: var(--toolbar-bg-color);
   box-shadow: var(--toolbar-box-shadow);
   border-bottom: var(--toolbar-border-bottom);
 }
 
 #toolbarViewer {
+  padding-top: 6px;
   height: 32px;
 }
 
@@ -452,7 +451,7 @@ body {
 }
 
 .findbar {
-  inset-inline-start: 64px;
+  inset-inline-start: 72px;
   min-width: 300px;
   background-color: var(--toolbar-bg-color);
 }
@@ -480,6 +479,7 @@ body {
 
 .findbar label:hover,
 .findbar input:focus-visible + label {
+  border-radius: 10px;
   color: var(--toggled-btn-color);
   background-color: var(--button-hover-color);
 }
@@ -791,7 +791,7 @@ body {
 .dropdownToolbarButton {
   /* Define this variable here, and not in :root, to avoid reflowing the
      entire viewer when updating the width. */
-  --scale-select-width: 140px;
+  --scale-select-width: 160px;
 
   width: var(--scale-select-width);
   padding: 0;
@@ -847,6 +847,7 @@ body {
 }
 
 .dropdownToolbarButton:is(:hover, :focus-visible, :active)::after {
+  border-radius: 10px;
   background-color: var(--toolbar-icon-hover-bg-color);
 }
 
@@ -869,6 +870,11 @@ body {
 
 #sidebarToggle::before {
   mask-image: var(--toolbarButton-sidebarToggle-icon);
+  transform: scaleX(var(--dir-factor));
+}
+
+#darkModeToggle::before {
+  mask-image: var(--toolbarButton-darkModeToggle-icon);
   transform: scaleX(var(--dir-factor));
 }
 
@@ -921,12 +927,6 @@ body {
 #secondaryPrint::before {
   mask-image: var(--toolbarButton-print-icon);
 }
-
-/*#if GENERIC*/
-:is(#openFile, #secondaryOpenFile)::before {
-  mask-image: var(--toolbarButton-openFile-icon);
-}
-/*#endif*/
 
 :is(#download, #secondaryDownload)::before {
   mask-image: var(--toolbarButton-download-icon);
@@ -1102,6 +1102,8 @@ a:is(.toolbarButton, .secondaryToolbarButton)[href="#"] {
   width: 40px;
   background-size: 0 0;
   transition-property: none;
+  background-color: var(--dropdown-btn-bg-color);
+  border-radius: 10px;
 }
 #pageNumber.visiblePageIsLoading {
   background-image: var(--loading-icon);
@@ -1490,4 +1492,12 @@ dialog :link {
   #scaleSelectContainer {
     display: none;
   }
+}
+
+#scaleSelectContainer {
+  border-radius: 10px;
+}
+
+#scaleSelect {
+  border-radius: 10px;
 }

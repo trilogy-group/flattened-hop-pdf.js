@@ -40,7 +40,6 @@ See https://github.com/adobe-type-tools/cmap-resources
       }
     </script>
 
-
 <!--#if MOZCENTRAL-->
 <!--#include viewer-snippet-firefox-extension.html-->
 <!--#elif CHROME-->
@@ -279,6 +278,11 @@ See https://github.com/adobe-type-tools/cmap-resources
                   <span data-l10n-id="toggle_sidebar_label">Toggle Sidebar</span>
                 </button>
                 <div class="toolbarButtonSpacer"></div>
+                <button id="darkModeToggle" class="toolbarButton" title="Toggle Dark Mode" tabindex="11" data-l10n-id="toggle_dark_mode" aria-expanded="false" aria-controls="sidebarContainer">
+                  <span data-l10n-id="toggle_darkmode_label">Toggle Dark Mode</span>
+                </button>
+                <div class="toolbarButtonSpacer"></div>
+
                 <button id="viewFind" class="toolbarButton" title="Find in Document" tabindex="12" data-l10n-id="findbar" aria-expanded="false" aria-controls="findbar">
                   <span data-l10n-id="findbar_label">Find</span>
                 </button>
@@ -455,5 +459,22 @@ See https://github.com/adobe-type-tools/cmap-resources
 <!--#if GENERIC-->
     <input type="file" id="fileInput" class="hidden">
 <!--#endif-->
+
+    <script>
+      // Dark Theme Toggler
+      window.addEventListener('load', function() {
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      });
+
+      document.getElementById('darkModeToggle').addEventListener('click', function() {
+        if (document.documentElement.getAttribute('data-theme') === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'light');
+        } else {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      });
+    </script>
   </body>
 </html>
