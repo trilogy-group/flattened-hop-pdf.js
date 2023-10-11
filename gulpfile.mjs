@@ -1048,7 +1048,7 @@ gulp.task(
 
       return buildGeneric(defines, GENERIC_LEGACY_DIR);
     },
-    async function bundleIntoSingleHtml() {
+    async function addSvgsToCSS() {
       const htmlPath = path.join(GENERIC_LEGACY_DIR, 'web/viewer.html');
       const html = fs.readFileSync(htmlPath, 'utf8');
       const $ = cheerio.load(html);
@@ -1064,7 +1064,7 @@ gulp.task(
           if (svgPath.endsWith('.svg')) {
             const absoluteSvgPath = path.join(GENERIC_LEGACY_DIR + 'web', svgPath);
             const svg = fs.readFileSync(absoluteSvgPath, 'utf8');
-            const dataUrl = 'data:image/svg+xml,' + encodeURI(svg);
+            const dataUrl = 'data:image/svg+xml,' + encodeURI(svg).replace(/\(/g, '%28').replace(/\)/g, '%29');
             return `url(${dataUrl})`;
           }
 
@@ -1072,17 +1072,9 @@ gulp.task(
           return match;
         });
 
-        $(this).replaceWith(`<style>${css}</style>`);
+        fs.writeFileSync(cssPath, css);
       });
 
-      $('script[src]').each(function() {
-        const jsPath = path.join(GENERIC_LEGACY_DIR + "web", $(this).attr('src'));
-        console.log(jsPath)
-        const js = fs.readFileSync(jsPath, 'utf8');
-        $(this).replaceWith(`<script>${js}</script>`);
-      });
-
-      fs.writeFileSync(htmlPath, $.html());
     },
     async function move() {
       gulp
@@ -1370,18 +1362,10 @@ gulp.task(
           // If svgPath is a Data URL, return it as is
           return match;
         });
-        let minifiedCss = new CleanCSS({}).minify(css).styles;
-        $(this).replaceWith(`<style>${minifiedCss}</style>`);
+
+        fs.writeFileSync(cssPath, css);
       });
 
-      $('script[src]').each(function() {
-        const jsPath = path.join(MINIFIED_LEGACY_DIR + "web", $(this).attr('src'));
-        console.log(jsPath)
-        const js = fs.readFileSync(jsPath, 'utf8');
-        $(this).replaceWith(`<script>${js}</script>`);
-      });
-
-      fs.writeFileSync(htmlPath, $.html());
     },
     async function move() {
       gulp

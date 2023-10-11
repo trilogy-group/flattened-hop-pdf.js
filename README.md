@@ -6,13 +6,19 @@ PDF.js is community-driven and supported by Mozilla. Our goal is to
 create a general-purpose, web standards-based platform for parsing and
 rendering PDFs.
 
-In this fork, we are make it a single html file + pdf.worker.js, so it can be used as a two file library.
+In this fork, we are make it into fewer dependency files.
 
 We are also adding dark mode button to toolbar and removing edit, annotations and load buttons.
 
 run `gulp minified-legacy` or `gulp generic-legacy` to generate the single viewer.html file with all the dependencies.
 
-The html file is generated in `build/minified-legacy/web/viewer.html` or `build/generic-legacy/web/viewer.html` depending on the command you run.
-The worker file is generated in `build/minified-legacy/build/pdf.worker.js` or `build/generic-legacy/build/pdf.worker.js` depending on the command you run.
+the required files are in the `build/generic-legacy` or `build/minified-legacy` folder.
+
+The required files are:
+
+- viewer.html
+- viewer.css
+- pdf.viewer.js
+- pdf.worker.js
 
 It supports only english language.
