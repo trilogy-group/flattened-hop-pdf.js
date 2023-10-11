@@ -1150,7 +1150,8 @@ a:is(.toolbarButton, .secondaryToolbarButton)[href="#"] {
   width: calc(100% - 8px);
   inset-block: 0;
   padding: 4px 4px 0;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
   user-select: none;
 }
 #thumbnailView {
