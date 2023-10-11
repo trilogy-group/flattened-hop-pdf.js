@@ -1,6 +1,7 @@
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
+const url = require('url');
 
 const hostname = '127.0.0.1';
 const port = 3000;
@@ -25,8 +26,14 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  // Decode URI and sanitize it to prevent path traversal attacks
-  let reqPath = decodeURI(req.url);
+  // Parse URL to get path and parameters
+  const parsedUrl = url.parse(req.url, true);
+  const reqPath = decodeURI(parsedUrl.pathname);
+  const params = parsedUrl.query;
+
+  // Use the parameters as needed
+  console.log(params);
+
   if (reqPath.includes('..')) {
     res.writeHead(400, { 'Content-Type': 'text/plain' });
     res.end('Bad Request');

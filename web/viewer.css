@@ -437,7 +437,7 @@ body {
 .findbar,
 .secondaryToolbar,
 .editorParamsToolbar {
-  top: 32px;
+  top: 40px;
   position: absolute;
   z-index: 30000;
   height: auto;
@@ -451,8 +451,8 @@ body {
 }
 
 .findbar {
-  inset-inline-start: 72px;
-  min-width: 300px;
+  inset-inline-start: 124px;
+  min-width: 250px;
   background-color: var(--toolbar-bg-color);
 }
 .findbar > div {

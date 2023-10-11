@@ -14,6 +14,7 @@
  */
 /* eslint-env node */
 
+import CleanCSS from "clean-css";
 import * as builder from "./external/builder/builder.mjs";
 import { exec, spawn, spawnSync } from "child_process";
 import autoprefixer from "autoprefixer";
@@ -40,7 +41,6 @@ import webpack2 from "webpack";
 import webpackStream from "webpack-stream";
 import zip from "gulp-zip";
 import cheerio from "cheerio";
-
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -1048,7 +1048,7 @@ gulp.task(
 
       return buildGeneric(defines, GENERIC_LEGACY_DIR);
     },
-    function bundleIntoSingleHtml() {
+    async function bundleIntoSingleHtml() {
       const htmlPath = path.join(GENERIC_LEGACY_DIR, 'web/viewer.html');
       const html = fs.readFileSync(htmlPath, 'utf8');
       const $ = cheerio.load(html);
@@ -1083,6 +1083,11 @@ gulp.task(
       });
 
       fs.writeFileSync(htmlPath, $.html());
+    },
+    async function move() {
+      gulp
+        .src(GENERIC_LEGACY_DIR + "build/pdf.worker.js")
+        .pipe(gulp.dest(GENERIC_LEGACY_DIR + "web"))
     }
   )
 );
@@ -1203,6 +1208,8 @@ function buildMinified(defines, dir) {
     gulp
       .src("web/compressed.tracemonkey-pldi-09.pdf")
       .pipe(gulp.dest(dir + "web")),
+
+
   ]);
 }
 
@@ -1363,8 +1370,8 @@ gulp.task(
           // If svgPath is a Data URL, return it as is
           return match;
         });
-
-        $(this).replaceWith(`<style>${css}</style>`);
+        let minifiedCss = new CleanCSS({}).minify(css).styles;
+        $(this).replaceWith(`<style>${minifiedCss}</style>`);
       });
 
       $('script[src]').each(function() {
@@ -1375,6 +1382,11 @@ gulp.task(
       });
 
       fs.writeFileSync(htmlPath, $.html());
+    },
+    async function move() {
+      gulp
+        .src(MINIFIED_LEGACY_DIR + "build/pdf.worker.js")
+        .pipe(gulp.dest(MINIFIED_LEGACY_DIR + "web"))
     }
   )
 );
