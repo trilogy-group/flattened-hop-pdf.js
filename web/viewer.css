@@ -929,7 +929,7 @@ body {
   mask-image: var(--toolbarButton-print-icon);
 }
 
-#fullscreen::before {
+#fullScreen::before {
   mask-image: var(--toolbarButton-fullscreen-icon);
 }
 
