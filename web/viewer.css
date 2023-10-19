@@ -91,6 +91,7 @@
   --toolbarButton-zoomIn-icon: url(images/toolbarButton-zoomIn.svg);
   --toolbarButton-presentationMode-icon: url(images/toolbarButton-presentationMode.svg);
   --toolbarButton-print-icon: url(images/toolbarButton-print.svg);
+  --toolbarButton-fullscreen-icon: url(images/toolbarButton-fullscreen.svg);
   --toolbarButton-download-icon: url(images/toolbarButton-download.svg);
   --toolbarButton-bookmark-icon: url(images/toolbarButton-bookmark.svg);
   --toolbarButton-viewThumbnail-icon: url(images/toolbarButton-viewThumbnail.svg);
@@ -926,6 +927,10 @@ body {
 #print::before,
 #secondaryPrint::before {
   mask-image: var(--toolbarButton-print-icon);
+}
+
+#fullscreen::before {
+  mask-image: var(--toolbarButton-fullscreen-icon);
 }
 
 :is(#download, #secondaryDownload)::before {
