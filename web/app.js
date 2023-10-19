@@ -171,6 +171,7 @@ const PDFViewerApplication = {
   pdfRenderingQueue: null,
   /** @type {PDFPresentationMode} */
   pdfPresentationMode: null,
+  pdfFullScreenMode: null,
   /** @type {PDFDocumentProperties} */
   pdfDocumentProperties: null,
   /** @type {PDFLinkService} */
@@ -1971,6 +1972,7 @@ const PDFViewerApplication = {
     eventBus._on("lastpage", webViewerLastPage);
     eventBus._on("nextpage", webViewerNextPage);
     eventBus._on("previouspage", webViewerPreviousPage);
+    eventBus._on("fullscreenchange", webViewerFullscreenChange);
     eventBus._on("zoomin", webViewerZoomIn);
     eventBus._on("zoomout", webViewerZoomOut);
     eventBus._on("zoomreset", webViewerZoomReset);
@@ -2530,6 +2532,34 @@ function webViewerNextPage() {
 }
 function webViewerPreviousPage() {
   PDFViewerApplication.pdfViewer.previousPage();
+}
+function webViewerFullscreenChange() {
+  const isFullscreen =
+    document.fullscreenElement ||
+    document.mozFullScreen ||
+    document.webkitIsFullScreen ||
+    document.msFullscreenElement;
+  if (isFullscreen) {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.mozCancelFullScreen) { /* Firefox */
+      document.mozCancelFullScreen();
+    } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+      document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) { /* IE/Edge */
+      document.msExitFullscreen();
+    }
+  } else {
+    if (document.documentElement.requestFullscreen) {
+      document.documentElement.requestFullscreen();
+    } else if (document.documentElement.mozRequestFullScreen) { /* Firefox */
+      document.documentElement.mozRequestFullScreen();
+    } else if (document.documentElement.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+      document.documentElement.webkitRequestFullscreen();
+    } else if (document.documentElement.msRequestFullscreen) { /* IE/Edge */
+      document.documentElement.msRequestFullscreen();
+    }
+  }
 }
 function webViewerZoomIn() {
   PDFViewerApplication.zoomIn();

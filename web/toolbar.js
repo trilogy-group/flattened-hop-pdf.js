@@ -39,8 +39,8 @@ const PAGE_NUMBER_LOADING_INDICATOR = "visiblePageIsLoading";
  * @property {HTMLButtonElement} zoomIn - Button to zoom in the pages.
  * @property {HTMLButtonElement} zoomOut - Button to zoom out the pages.
  * @property {HTMLButtonElement} viewFind - Button to open find bar.
+ * @property {HTMLButtonElement} fullscreen - Button to fullscreen mode.
 
- * @property {HTMLButtonElement} download - Button to download the document.
  */
 
 class Toolbar {
@@ -60,8 +60,7 @@ class Toolbar {
       { element: options.next, eventName: "nextpage" },
       { element: options.zoomIn, eventName: "zoomin" },
       { element: options.zoomOut, eventName: "zoomout" },
-      { element: options.print, eventName: "print" },
-      { element: options.download, eventName: "download" },
+      { element: options.fullScreen, eventName: "fullscreenchange" },
     ];
 
     this.items = {

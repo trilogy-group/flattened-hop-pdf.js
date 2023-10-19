@@ -52,6 +52,7 @@ function getViewerConfiguration() {
       zoomIn: document.getElementById("zoomIn"),
       zoomOut: document.getElementById("zoomOut"),
       viewFind: document.getElementById("viewFind"),
+      fullScreen: document.getElementById("fullScreen"),
       print: document.getElementById("print"),
       download: document.getElementById("download"),
     },
