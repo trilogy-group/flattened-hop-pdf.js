@@ -36,6 +36,7 @@ import {
   PDFDateString,
   setLayerDimensions,
 } from "./display_utils.js";
+import { ANNOTATION_ICONS } from "./annotation_icons.js";
 import { AnnotationStorage } from "./annotation_storage.js";
 import { ColorConverters } from "../shared/scripting_utils.js";
 import { NullL10n } from "display-l10n_utils";
@@ -962,13 +963,10 @@ class TextAnnotationElement extends AnnotationElement {
   render() {
     this.container.classList.add("textAnnotation");
 
+    const type = this.data.name;
     const image = document.createElement("img");
-    image.src =
-      this.imageResourcesPath +
-      "annotation-" +
-      this.data.name.toLowerCase() +
-      ".svg";
-    image.alt = "[{{type}} Annotation]";
+    image.src = ANNOTATION_ICONS[type] || ANNOTATION_ICONS.noicon;
+    image.alt = `[${type} Annotation]`;
     image.dataset.l10nId = "text_annotation_type";
     image.dataset.l10nArgs = JSON.stringify({ type: this.data.name });
 
