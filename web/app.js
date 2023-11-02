@@ -44,6 +44,7 @@ import {
   InvalidPDFException,
   isDataScheme,
   isPdfFile,
+  loadScript,
   MissingPDFException,
   PDFWorker,
   PromiseCapability,
@@ -2239,10 +2240,10 @@ async function loadFakeWorker() {
   GlobalWorkerOptions.workerSrc ||= AppOptions.get("workerSrc");
 
   if (typeof PDFJSDev === "undefined") {
-    globalThis.pdfjsWorker = await import("pdfjs/pdf.worker.js");
+    window.pdfjsWorker = await import("pdfjs/pdf.worker.js");
     return;
   }
-  await __non_webpack_import__(PDFWorker.workerSrc); // eslint-disable-line no-undef
+  await loadScript(PDFWorker.workerSrc);
 }
 
 async function loadPDFBug(self) {

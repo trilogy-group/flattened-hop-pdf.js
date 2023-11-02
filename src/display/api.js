@@ -51,6 +51,7 @@ import {
   DOMStandardFontDataFactory,
   isDataScheme,
   isValidFetchUrl,
+  loadScript,
   PageViewport,
   RenderingCancelledException,
   StatTimer,
@@ -1978,13 +1979,14 @@ const PDFWorkerUtil = {
   fakeWorkerId: 0,
 };
 if (typeof PDFJSDev === "undefined" || PDFJSDev.test("GENERIC")) {
-  if (isNodeJS) {
+  // eslint-disable-next-line no-undef
+  if (isNodeJS && typeof __non_webpack_require__ === "function") {
     // Workers aren't supported in Node.js, force-disabling them there.
     PDFWorkerUtil.isWorkerDisabled = true;
 
     GlobalWorkerOptions.workerSrc ||= PDFJSDev.test("LIB")
       ? "../pdf.worker.js"
-      : "./pdf.worker.mjs";
+      : "./pdf.worker.js";
   }
 
   // Check if URLs have the same origin. For non-HTTP based URLs, returns false.
@@ -2117,7 +2119,11 @@ class PDFWorker {
           );
         }
 
-        const worker = new Worker(workerSrc, { type: "module" });
+        const worker =
+          typeof PDFJSDev === "undefined" &&
+          !workerSrc.endsWith("/build/pdf.worker.js")
+            ? new Worker(workerSrc, { type: "module" })
+            : new Worker(workerSrc);
         const messageHandler = new MessageHandler("main", "worker", worker);
         const terminateEarly = () => {
           worker.removeEventListener("error", onWorkerError);
@@ -2299,15 +2305,40 @@ class PDFWorker {
   // Loads worker code into the main-thread.
   static get _setupFakeWorkerGlobal() {
     const loader = async () => {
-      if (this.#mainThreadWorkerMessageHandler) {
+      const mainWorkerMessageHandler = this.#mainThreadWorkerMessageHandler;
+
+      if (mainWorkerMessageHandler) {
         // The worker was already loaded using e.g. a `<script>` tag.
-        return this.#mainThreadWorkerMessageHandler;
+        return mainWorkerMessageHandler;
       }
-      const worker =
-        typeof PDFJSDev === "undefined"
-          ? await import("pdfjs/pdf.worker.js")
-          : await __non_webpack_import__(this.workerSrc); // eslint-disable-line no-undef
-      return worker.WorkerMessageHandler;
+      if (typeof PDFJSDev === "undefined") {
+        const worker = await import("pdfjs/pdf.worker.js");
+        return worker.WorkerMessageHandler;
+      }
+      if (
+        PDFJSDev.test("GENERIC") &&
+        isNodeJS &&
+        // eslint-disable-next-line no-undef
+        typeof __non_webpack_require__ === "function"
+      ) {
+        // Since bundlers, such as Webpack, cannot be told to leave `require`
+        // statements alone we are thus forced to jump through hoops in order
+        // to prevent `Critical dependency: ...` warnings in third-party
+        // deployments of the built `pdf.js`/`pdf.worker.js` files; see
+        // https://github.com/webpack/webpack/issues/8826
+        //
+        // The following hack is based on the assumption that code running in
+        // Node.js won't ever be affected by e.g. Content Security Policies that
+        // prevent the use of `eval`. If that ever occurs, we should revert this
+        // to a normal `__non_webpack_require__` statement and simply document
+        // the Webpack warnings instead (telling users to ignore them).
+        //
+        // eslint-disable-next-line no-eval
+        const worker = eval("require")(this.workerSrc);
+        return worker.WorkerMessageHandler;
+      }
+      await loadScript(this.workerSrc);
+      return window.pdfjsWorker.WorkerMessageHandler;
     };
 
     return shadow(this, "_setupFakeWorkerGlobal", loader());

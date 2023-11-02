@@ -300,8 +300,8 @@ const defaultOptions = {
       typeof PDFJSDev === "undefined"
         ? "../src/pdf.worker.js"
         : PDFJSDev.test("MOZCENTRAL")
-        ? "resource://pdf.js/build/pdf.worker.mjs"
-        : "../build/pdf.worker.mjs",
+        ? "resource://pdf.js/build/pdf.worker.js"
+        : "../build/pdf.worker.js",
     kind: OptionKind.WORKER,
   },
 };
@@ -325,8 +325,8 @@ if (typeof PDFJSDev === "undefined" || PDFJSDev.test("GENERIC")) {
     /** @type {string} */
     value:
       typeof PDFJSDev === "undefined"
-        ? "../build/dev-sandbox/pdf.sandbox.mjs"
-        : "../build/pdf.sandbox.mjs",
+        ? "../build/dev-sandbox/pdf.sandbox.js"
+        : "../build/pdf.sandbox.js",
     kind: OptionKind.VIEWER,
   };
 } else if (PDFJSDev.test("CHROME")) {

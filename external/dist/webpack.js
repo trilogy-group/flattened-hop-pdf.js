@@ -15,12 +15,11 @@
 
 "use strict";
 
-const pdfjs = require("./build/pdf.mjs");
+const pdfjs = require("./build/pdf.js");
 
 if (typeof window !== "undefined" && "Worker" in window) {
   pdfjs.GlobalWorkerOptions.workerPort = new Worker(
-    new URL("./build/pdf.worker.mjs", import.meta.url),
-    { type: "module" }
+    new URL("./build/pdf.worker.js", import.meta.url)
   );
 }
 
