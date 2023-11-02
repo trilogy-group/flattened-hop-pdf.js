@@ -19,6 +19,9 @@ Adobe CMap resources are covered by their own copyright but the same license:
     Copyright 1990-2015 Adobe Systems Incorporated.
 
 See https://github.com/adobe-type-tools/cmap-resources
+
+NOTICE: Changes have been made to this file to make it a single html file
+See https://github.com/trilogy-group/flattened-hop-pdf.js
 -->
 <html dir="ltr" mozdisallowselectionprint>
   <head>
@@ -63,9 +66,8 @@ See https://github.com/adobe-type-tools/cmap-resources
           "display-network": "../src/display/network.js",
           "display-node_stream": "../src/display/stubs.js",
           "display-node_utils": "../src/display/stubs.js",
+          "display-svg": "../src/display/stubs.js",
 
-          "web-alt_text_manager": "./alt_text_manager.js",
-          "web-annotation_editor_params": "./annotation_editor_params.js",
           "web-com": "./genericcom.js",
           "web-pdf_attachment_viewer": "./pdf_attachment_viewer.js",
           "web-pdf_cursor_tools": "./pdf_cursor_tools.js",
@@ -166,57 +168,14 @@ See https://github.com/adobe-type-tools/cmap-resources
           </div>
         </div>  <!-- findbar -->
 
-        <div class="editorParamsToolbar hidden doorHangerRight" id="editorFreeTextParamsToolbar">
-          <div class="editorParamsToolbarContainer">
-            <div class="editorParamsSetter">
-              <label for="editorFreeTextColor" class="editorParamsLabel" data-l10n-id="editor_free_text_color">Color</label>
-              <input type="color" id="editorFreeTextColor" class="editorParamsColor" tabindex="100">
-            </div>
-            <div class="editorParamsSetter">
-              <label for="editorFreeTextFontSize" class="editorParamsLabel" data-l10n-id="editor_free_text_size">Size</label>
-              <input type="range" id="editorFreeTextFontSize" class="editorParamsSlider" value="10" min="5" max="100" step="1" tabindex="101">
-            </div>
-          </div>
-        </div>
-
-        <div class="editorParamsToolbar hidden doorHangerRight" id="editorInkParamsToolbar">
-          <div class="editorParamsToolbarContainer">
-            <div class="editorParamsSetter">
-              <label for="editorInkColor" class="editorParamsLabel" data-l10n-id="editor_ink_color">Color</label>
-              <input type="color" id="editorInkColor" class="editorParamsColor" tabindex="102">
-            </div>
-            <div class="editorParamsSetter">
-              <label for="editorInkThickness" class="editorParamsLabel" data-l10n-id="editor_ink_thickness">Thickness</label>
-              <input type="range" id="editorInkThickness" class="editorParamsSlider" value="1" min="1" max="20" step="1" tabindex="103">
-            </div>
-            <div class="editorParamsSetter">
-              <label for="editorInkOpacity" class="editorParamsLabel" data-l10n-id="editor_ink_opacity">Opacity</label>
-              <input type="range" id="editorInkOpacity" class="editorParamsSlider" value="100" min="1" max="100" step="1" tabindex="104">
-            </div>
-          </div>
-        </div>
-
-        <div class="editorParamsToolbar hidden doorHangerRight" id="editorStampParamsToolbar">
-          <div class="editorParamsToolbarContainer">
-            <button id="editorStampAddImage" class="secondaryToolbarButton" title="Add image" tabindex="105" data-l10n-id="editor_stamp_add_image">
-              <span data-l10n-id="editor_stamp_add_image_label">Add image</span>
-            </button>
-          </div>
-        </div>
-
         <div id="secondaryToolbar" class="secondaryToolbar hidden doorHangerRight">
           <div id="secondaryToolbarButtonContainer">
-<!--#if GENERIC-->
-            <button id="secondaryOpenFile" class="secondaryToolbarButton visibleLargeView" title="Open File" tabindex="51" data-l10n-id="open_file">
-              <span data-l10n-id="open_file_label">Open</span>
-            </button>
-<!--#endif-->
 
-            <button id="secondaryPrint" class="secondaryToolbarButton visibleMediumView" title="Print" tabindex="52" data-l10n-id="print">
+            <button id="secondaryPrint" class="secondaryToolbarButton" title="Print" tabindex="52" data-l10n-id="print">
               <span data-l10n-id="print_label">Print</span>
             </button>
 
-            <button id="secondaryDownload" class="secondaryToolbarButton visibleMediumView" title="Save" tabindex="53" data-l10n-id="save">
+            <button id="secondaryDownload" class="secondaryToolbarButton" title="Save" tabindex="53" data-l10n-id="save">
               <span data-l10n-id="save_label">Save</span>
             </button>
 
@@ -310,6 +269,11 @@ See https://github.com/adobe-type-tools/cmap-resources
                   <span data-l10n-id="toggle_sidebar_label">Toggle Sidebar</span>
                 </button>
                 <div class="toolbarButtonSpacer"></div>
+                <button id="darkModeToggle" class="toolbarButton" title="Toggle Dark Mode" tabindex="11" data-l10n-id="toggle_dark_mode" aria-expanded="false" aria-controls="sidebarContainer">
+                  <span data-l10n-id="toggle_darkmode_label">Toggle Dark Mode</span>
+                </button>
+                <div class="toolbarButtonSpacer"></div>
+
                 <button id="viewFind" class="toolbarButton" title="Find in Document" tabindex="12" data-l10n-id="findbar" aria-expanded="false" aria-controls="findbar">
                   <span data-l10n-id="findbar_label">Find</span>
                 </button>
@@ -326,35 +290,11 @@ See https://github.com/adobe-type-tools/cmap-resources
                 <span id="numPages" class="toolbarLabel"></span>
               </div>
               <div id="toolbarViewerRight">
-<!--#if GENERIC-->
-                <button id="openFile" class="toolbarButton hiddenLargeView" title="Open File" tabindex="31" data-l10n-id="open_file">
-                  <span data-l10n-id="open_file_label">Open</span>
-                </button>
-<!--#endif-->
-
-                <button id="print" class="toolbarButton hiddenMediumView" title="Print" tabindex="32" data-l10n-id="print">
-                  <span data-l10n-id="print_label">Print</span>
-                </button>
-
-                <button id="download" class="toolbarButton hiddenMediumView" title="Save" tabindex="33" data-l10n-id="save">
-                  <span data-l10n-id="save_label">Save</span>
+                <button id="fullScreen" class="toolbarButton" title="Full Screen" tabindex="32" data-l10n-id="fullScreen">
+                  <span data-l10n-id="fullScreen_label">Full Screen</span>
                 </button>
 
                 <div class="verticalToolbarSeparator hiddenMediumView"></div>
-
-                <div id="editorModeButtons" class="splitToolbarButton toggled" role="radiogroup">
-                  <button id="editorFreeText" class="toolbarButton" disabled="disabled" title="Text" role="radio" aria-checked="false" aria-controls="editorFreeTextParamsToolbar" tabindex="34" data-l10n-id="editor_free_text2">
-                    <span data-l10n-id="editor_free_text2_label">Text</span>
-                  </button>
-                  <button id="editorInk" class="toolbarButton" disabled="disabled" title="Draw" role="radio" aria-checked="false" aria-controls="editorInkParamsToolbar" tabindex="35" data-l10n-id="editor_ink2">
-                    <span data-l10n-id="editor_ink2_label">Draw</span>
-                  </button>
-                  <button id="editorStamp" class="toolbarButton hidden" disabled="disabled" title="Add or edit images" role="radio" aria-checked="false" aria-controls="editorStampParamsToolbar" tabindex="36" data-l10n-id="editor_stamp1">
-                    <span data-l10n-id="editor_stamp1_label">Add or edit images</span>
-                  </button>
-                </div>
-
-                <div id="editorModeSeparator" class="verticalToolbarSeparator"></div>
 
                 <button id="secondaryToolbarToggle" class="toolbarButton" title="Tools" tabindex="48" data-l10n-id="tools" aria-expanded="false" aria-controls="secondaryToolbar">
                   <span data-l10n-id="tools_label">Tools</span>
@@ -480,49 +420,6 @@ See https://github.com/adobe-type-tools/cmap-resources
             <button id="documentPropertiesClose" class="dialogButton"><span data-l10n-id="document_properties_close">Close</span></button>
           </div>
         </dialog>
-        <dialog id="altTextDialog" aria-labelledby="dialogLabel" aria-describedby="dialogDescription">
-          <div id="altTextContainer">
-            <div id="overallDescription">
-              <span id="dialogLabel" data-l10n-id="editor_alt_text_dialog_label" class="title">Choose an option</span>
-              <span id="dialogDescription" data-l10n-id="editor_alt_text_dialog_description">
-                Alt text (alternative text) helps when people can’t see the image or when it doesn’t load.
-              </span>
-            </div>
-            <div id="addDescription">
-              <div class="radio">
-                <div class="radioButton">
-                  <input type="radio" id="descriptionButton" name="altTextOption" tabindex="0" aria-describedby="descriptionAreaLabel" checked>
-                  <label for="descriptionButton" data-l10n-id="editor_alt_text_add_description_label">Add a description</label>
-                </div>
-                <div class="radioLabel">
-                  <span id="descriptionAreaLabel" data-l10n-id="editor_alt_text_add_description_description">
-                    Aim for 1-2 sentences that describe the subject, setting, or actions.
-                  </span>
-                </div>
-              </div>
-              <div class="descriptionArea">
-                <textarea id="descriptionTextarea" placeholder="For example, “A young man sits down at a table to eat a meal”" aria-labelledby="descriptionAreaLabel" data-l10n-id="editor_alt_text_textarea" tabindex="0"></textarea>
-              </div>
-            </div>
-            <div id="markAsDecorative">
-              <div class="radio">
-                <div class="radioButton">
-                  <input type="radio" id="decorativeButton" name="altTextOption" aria-describedby="decorativeLabel">
-                  <label for="decorativeButton" data-l10n-id="editor_alt_text_mark_decorative_label">Mark as decorative</label>
-                </div>
-                <div class="radioLabel">
-                  <span id="decorativeLabel" data-l10n-id="editor_alt_text_mark_decorative_description">
-                    This is used for ornamental images, like borders or watermarks.
-                  </span>
-                </div>
-              </div>
-            </div>
-            <div id="buttons">
-              <button id="altTextCancel" tabindex="0"><span data-l10n-id="editor_alt_text_cancel_button">Cancel</span></button>
-              <button id="altTextSave" tabindex="0"><span data-l10n-id="editor_alt_text_save_button">Save</span></button>
-            </div>
-          </div>
-        </dialog>
 <!--#if !MOZCENTRAL-->
         <dialog id="printServiceDialog" style="min-width: 200px;">
           <div class="row">
@@ -548,5 +445,22 @@ See https://github.com/adobe-type-tools/cmap-resources
 <!--#if GENERIC-->
     <input type="file" id="fileInput" class="hidden">
 <!--#endif-->
+
+    <script>
+      // Dark Theme Toggler
+      window.addEventListener('load', function() {
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      });
+
+      document.getElementById('darkModeToggle').addEventListener('click', function() {
+        if (document.documentElement.getAttribute('data-theme') === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'light');
+        } else {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      });
+    </script>
   </body>
 </html>

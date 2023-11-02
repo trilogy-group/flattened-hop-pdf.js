@@ -140,13 +140,7 @@ class SecondaryToolbar {
         close: true,
       },
     ];
-    if (typeof PDFJSDev === "undefined" || PDFJSDev.test("GENERIC")) {
-      this.buttons.push({
-        element: options.openFileButton,
-        eventName: "openfile",
-        close: true,
-      });
-    }
+
     this.items = {
       firstPage: options.firstPageButton,
       lastPage: options.lastPageButton,

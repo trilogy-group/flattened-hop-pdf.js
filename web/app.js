@@ -54,8 +54,6 @@ import {
 import { AppOptions, OptionKind } from "./app_options.js";
 import { AutomationEventBus, EventBus } from "./event_utils.js";
 import { LinkTarget, PDFLinkService } from "./pdf_link_service.js";
-import { AltTextManager } from "web-alt_text_manager";
-import { AnnotationEditorParams } from "web-annotation_editor_params";
 import { OverlayManager } from "./overlay_manager.js";
 import { PasswordPrompt } from "./password_prompt.js";
 import { PDFAttachmentViewer } from "web-pdf_attachment_viewer";
@@ -171,6 +169,7 @@ const PDFViewerApplication = {
   pdfRenderingQueue: null,
   /** @type {PDFPresentationMode} */
   pdfPresentationMode: null,
+  pdfFullScreenMode: null,
   /** @type {PDFDocumentProperties} */
   pdfDocumentProperties: null,
   /** @type {PDFLinkService} */
@@ -505,14 +504,6 @@ const PDFViewerApplication = {
             foreground: AppOptions.get("pageColorsForeground"),
           }
         : null;
-    const altTextManager = appConfig.altTextDialog
-      ? new AltTextManager(
-          appConfig.altTextDialog,
-          container,
-          this.overlayManager,
-          eventBus
-        )
-      : null;
 
     const pdfViewer = new PDFViewer({
       container,
@@ -521,7 +512,6 @@ const PDFViewerApplication = {
       renderingQueue: pdfRenderingQueue,
       linkService: pdfLinkService,
       downloadManager,
-      altTextManager,
       findController,
       scriptingManager:
         AppOptions.get("enableScripting") && pdfScriptingManager,
@@ -566,23 +556,6 @@ const PDFViewerApplication = {
 
     if (!this.supportsIntegratedFind && appConfig.findBar) {
       this.findBar = new PDFFindBar(appConfig.findBar, eventBus, l10n);
-    }
-
-    if (appConfig.annotationEditorParams) {
-      if (annotationEditorMode !== AnnotationEditorType.DISABLE) {
-        if (AppOptions.get("enableStampEditor") && isOffscreenCanvasSupported) {
-          appConfig.toolbar?.editorStampButton?.classList.remove("hidden");
-        }
-
-        this.annotationEditorParams = new AnnotationEditorParams(
-          appConfig.annotationEditorParams,
-          eventBus
-        );
-      } else {
-        for (const id of ["editorModeButtons", "editorModeSeparator"]) {
-          document.getElementById(id)?.classList.add("hidden");
-        }
-      }
     }
 
     if (appConfig.documentProperties) {
@@ -1964,6 +1937,7 @@ const PDFViewerApplication = {
     eventBus._on("lastpage", webViewerLastPage);
     eventBus._on("nextpage", webViewerNextPage);
     eventBus._on("previouspage", webViewerPreviousPage);
+    eventBus._on("fullscreenchange", webViewerFullscreenChange);
     eventBus._on("zoomin", webViewerZoomIn);
     eventBus._on("zoomout", webViewerZoomOut);
     eventBus._on("zoomreset", webViewerZoomReset);
@@ -2526,6 +2500,38 @@ function webViewerNextPage() {
 }
 function webViewerPreviousPage() {
   PDFViewerApplication.pdfViewer.previousPage();
+}
+function webViewerFullscreenChange() {
+  const isFullscreen =
+    document.fullscreenElement ||
+    document.mozFullScreen ||
+    document.webkitIsFullScreen ||
+    document.msFullscreenElement;
+  if (isFullscreen) {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.mozCancelFullScreen) {
+      /* Firefox */
+      document.mozCancelFullScreen();
+    } else if (document.webkitExitFullscreen) {
+      /* Chrome, Safari and Opera */
+      document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) {
+      /* IE/Edge */
+      document.msExitFullscreen();
+    }
+  } else if (document.documentElement.requestFullscreen) {
+    document.documentElement.requestFullscreen();
+  } else if (document.documentElement.mozRequestFullScreen) {
+    /* Firefox */
+    document.documentElement.mozRequestFullScreen();
+  } else if (document.documentElement.webkitRequestFullscreen) {
+    /* Chrome, Safari & Opera */
+    document.documentElement.webkitRequestFullscreen();
+  } else if (document.documentElement.msRequestFullscreen) {
+    /* IE/Edge */
+    document.documentElement.msRequestFullscreen();
+  }
 }
 function webViewerZoomIn() {
   PDFViewerApplication.zoomIn();
