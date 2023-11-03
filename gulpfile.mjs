@@ -1243,7 +1243,7 @@ async function parseMinified(dir) {
   console.log("### Cleaning js files");
 
   fs.unlinkSync(dir + "/web/viewer.js");
-  fs.unlinkSync(dir + "/web/debugger.js");
+  //fs.unlinkSync(dir + "/web/debugger.js");
   fs.unlinkSync(dir + "/build/pdf.js");
   fs.unlinkSync(dir + "/build/pdf.worker.js");
   fs.unlinkSync(dir + "/build/pdf.sandbox.js");
